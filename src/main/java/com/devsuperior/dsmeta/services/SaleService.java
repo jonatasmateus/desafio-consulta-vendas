@@ -3,9 +3,11 @@ package com.devsuperior.dsmeta.services;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 
 import com.devsuperior.dsmeta.dto.ReportDTO;
+import com.devsuperior.dsmeta.dto.SummaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,5 +33,11 @@ public class SaleService {
 		LocalDate newMaxDate = !maxDate.isEmpty() ? LocalDate.parse(maxDate) : LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 		LocalDate newMinDate = !minDate.isEmpty() ? LocalDate.parse(minDate) : newMaxDate.minusYears(1L);
 		return repository.getReport(newMinDate, newMaxDate, name, pageable);
+	}
+
+	public List<SummaryDTO> getSummary(String minDate, String maxDate) {
+		LocalDate newMaxDate = !maxDate.isEmpty() ? LocalDate.parse(maxDate) : LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+		LocalDate newMinDate = !minDate.isEmpty() ? LocalDate.parse(minDate) : newMaxDate.minusYears(1L);
+		return repository.getSummary(newMinDate, newMaxDate);
 	}
 }
